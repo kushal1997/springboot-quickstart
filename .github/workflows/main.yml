@@ -10,7 +10,29 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: set up java sdk 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: java sdk confirmation
+        run: |
+          echo "java sdk 17 setup done"
+          java -version
+
+      - name: run test cases
+        run: mvn -B test -DtrimStackTrace=true
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     outputs:
       jar-path: ${{ steps.set-output.outputs.jar }}
@@ -74,30 +96,8 @@ jobs:
             echo "================== checking jar files copied or not =========="
             ls -lh /home/ubuntu/spring_boot_application/target
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v1
-
-      - name: set up java sdk 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: "temurin"
-          java-version: "17"
-
-      - name: java sdk confirmation
-        run: |
-          echo "java sdk 17 setup done"
-          java -version
-
-      - name: run test cases
-        run: mvn -B test -DtrimStackTrace=true
-
   deploy:
-    needs: [build, test]
+    needs: [test, build]
     runs-on: ubuntu-latest
 
     steps:
