@@ -51,7 +51,7 @@ jobs:
               echo "no directory found"
               mkdir -p /home/ubuntu/spring_boot_application
             fi
-            ls -lh /home/ubuntu/spring_boot_application/
+            ls -l
 
       - name: copy jar file to ec2
         uses: appleboy/scp-action@v1
@@ -71,7 +71,7 @@ jobs:
           port: 22
           script: |
             echo "================== checking jar files copied or not =========="
-            ls -l /home/ubuntu/spring_boot_application/
+            ls -lh /home/ubuntu/spring_boot_application/
 
       # - name: run jar in ec2
       #   uses: appleboy/ssh-action@v1
