@@ -52,6 +52,26 @@ jobs:
             fi
             ls -l
 
+      - name: copy jar file to ec2
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH }}
+          source: "target/hello-world-0.0.1-SNAPSHOT.jar"
+          target: "/home/ubuntu/spring_boot_application/"
+
+      - name: checking whether its copied or not
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH }}
+          port: 22
+          script: |
+            echo "================== checking jar files copied or not =========="
+            ls -lh /home/ubuntu/spring_boot_application/target
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -73,26 +93,6 @@ jobs:
         run: |
           echo "java sdk 17 setup done"
           java -version
-
-      - name: copy jar file to ec2
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH }}
-          source: "target/hello-world-0.0.1-SNAPSHOT.jar"
-          target: "/home/ubuntu/spring_boot_application/"
-
-      - name: checking whether its copied or not
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH }}
-          port: 22
-          script: |
-            echo "================== checking jar files copied or not =========="
-            ls -lh /home/ubuntu/spring_boot_application/target
 
       - name: run jar in ec2
         uses: appleboy/ssh-action@v1
