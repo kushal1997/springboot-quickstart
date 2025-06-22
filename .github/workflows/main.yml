@@ -44,8 +44,11 @@ jobs:
           port: 22
           script: |
             if [-d "/home/ubuntu/spring_boot_application/"]; then
+              echo "directory is there"
               rm -rf /home/ubuntu/spring_boot_application/app.jar
+              ls -l /home/ubuntu/spring_boot_application/
             else
+              echo "no directory found"
               mkdir -p /home/ubuntu/spring_boot_application
             fi
             ls -l
