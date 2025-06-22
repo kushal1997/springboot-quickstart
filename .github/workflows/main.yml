@@ -71,16 +71,16 @@ jobs:
           port: 22
           script: |
             echo "================== checking jar files copied or not =========="
-            ls -lh /home/ubuntu/spring_boot_application/
+            ls -lh /home/ubuntu/spring_boot_application/target
 
-      # - name: run jar in ec2
-      #   uses: appleboy/ssh-action@v1
-      #   with:
-      #     host: ${{ secrets.EC2_HOST }}
-      #     username: ${{ secrets.EC2_USERNAME }}
-      #     key: ${{ secrets.EC2_SSH }}
-      #     port: 22
-      #     script: |
-      #       java -jar /home/ubuntu/spring_boot_application/app.jar
-      #       echo "================== checking whether its running or not =================="
-      #       curl http://localhost:8080/health
+      - name: run jar in ec2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH }}
+          port: 22
+          script: |
+            java -jar /home/ubuntu/spring_boot_application/target/hello-world-0.0.1-SNAPSHOT.jar
+            echo "================== checking whether its running or not =================="
+            curl http://localhost:8080/health
