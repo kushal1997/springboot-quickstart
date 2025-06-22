@@ -23,6 +23,9 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
+      - name: run test cases
+        run: mvn -B test -DtrimStackTrace=true
+
       - name: careating  jar file and size
         run: |
           mvn -q package
@@ -33,6 +36,3 @@ jobs:
         with:
           name: springboot-jar
           path: target/*.jar
-
-      - name: run test cases
-        run: mvn -B test -DtrimStackTrace=true
