@@ -43,7 +43,7 @@ jobs:
           key: ${{ secrets.EC2_SSH }}
           port: 22
           script: |
-            if [ -d "/home/ubuntu/spring_boot_application/ "]; then
+            if [ -d "/home/ubuntu/spring_boot_application/" ]; then
               echo "directory is there"
               rm -rf /home/ubuntu/spring_boot_application/app.jar
               ls -l /home/ubuntu/spring_boot_application/
