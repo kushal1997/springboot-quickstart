@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - ".github/workflows/adv_main.yml"
 
   workflow_dispatch:
 

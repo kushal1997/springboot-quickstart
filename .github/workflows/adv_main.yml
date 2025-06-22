@@ -4,16 +4,18 @@ on:
   push:
     branches:
       - main
+    paths:
+      - ".github/workflows/adv_main.yml"
 
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-  
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
-        
+
       - name: Hello world testing
         run: echo "Hello World"
