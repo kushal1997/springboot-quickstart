@@ -26,3 +26,8 @@ jobs:
         run: |
           echo "java sdk 17 setup done"
           java -version
+
+      - name: careating jar file
+        run: |
+          mvn package
+          ls -l /target
