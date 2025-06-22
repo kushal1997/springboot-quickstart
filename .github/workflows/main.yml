@@ -30,4 +30,4 @@ jobs:
       - name: careating jar file
         run: |
           mvn package
-          ls -l /target
+          ls -l target/
