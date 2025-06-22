@@ -10,12 +10,29 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v1
 
-      - name: Hello world testing
-        run: echo "Hello World"
+      - name: set up java sdk 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: careating  jar file and size
+        run: |
+          mvn -q package
+          ls -lh target/*.jar
+
+      - name: upload jar as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: springboot-jar
+          path: target/*.jar
+
+      - name: run test cases
+        run: mvn -B test -DtrimStackTrace=true
