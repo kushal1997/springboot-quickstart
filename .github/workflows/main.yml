@@ -92,7 +92,7 @@ jobs:
           java -version
 
       - name: run test cases
-        run: mvn -q test
+        run: mvn -B test
 
   deploy:
     needs: [build, test]
