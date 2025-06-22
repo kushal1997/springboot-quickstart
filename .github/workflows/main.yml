@@ -45,7 +45,7 @@ jobs:
           script: |
             if [ -d "/home/ubuntu/spring_boot_application/" ]; then
               echo "directory is there"
-              rm -rf /home/ubuntu/spring_boot_application/app.jar
+              rm -rf /home/ubuntu/spring_boot_application/*
               ls -l /home/ubuntu/spring_boot_application/
             else
               echo "no directory found"
