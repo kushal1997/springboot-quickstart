@@ -92,7 +92,7 @@ jobs:
           java -version
 
       - name: run test cases
-        run: mvn -B test
+        run: mvn -B test -DtrimStackTrace=true
 
   deploy:
     needs: [build, test]
